@@ -1,0 +1,42 @@
+#include "arduino_secrets.h"
+#include "thingProperties.h"
+#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  delay(1500);
+
+  initProperties();
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  setDebugMessageLevel(2);
+  ArduinoCloud.printDebugInfo();
+
+  dht.begin();
+}
+
+void loop() {
+  ArduinoCloud.update();
+
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  if (!isnan(h) && !isnan(t)) {
+    humidity = h;
+    temperature = t;
+
+    Serial.print("Temp: ");
+    Serial.print(t);
+    Serial.print(" °C | Humidity: ");
+    Serial.print(h);
+    Serial.println(" %");
+  } else {
+    Serial.println("Failed to read from DHT sensor.");
+  }
+
+  delay(2000);
+}
