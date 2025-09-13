@@ -1,0 +1,2 @@
+DEVICE_ID  = "46aacd8b-a7b9-4cc0-b80f-f68b7260fe7a"
+SECRET_KEY = "p3QrdUAjmSntPa047X@9YUO8v"
